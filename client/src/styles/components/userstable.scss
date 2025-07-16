@@ -1,4 +1,24 @@
 @import '../fragments/colors.scss';
+@import '../fragments/mixins.scss';
+
+
+.add-user{
+
+    @include globalButton;
+ 
+
+  width:20%;
+    display:flex;
+  justify-content: center;
+  align-content: center;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.loading{
+    margin: auto;
+    margin-top: 22rem;
+}
 .users-table {
     margin-top: 2rem;
     padding: 1.5rem;

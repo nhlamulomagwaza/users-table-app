@@ -1,6 +1,46 @@
+import { useContext } from 'react';
+import { usersTableContext } from '../store/AppContext';
 import '../styles/components/auth.scss';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
+
+
 
 function Auth() {
+
+  const {setIsAuthenticated}= useContext(usersTableContext);
+
+
+ const [username, setUsername]= useState('');
+ const [password, setPassword]= useState('');
+
+  const handleFormSubmit = (e)=>{
+
+e.preventDefault();
+    
+    if(!username || !password){
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+
+
+    if(username !== 'nhlamulo' || password !== 'testpassword'){
+      toast.error('Invalid username or password');
+      return;
+    } else{
+    
+       setTimeout(() => {
+       toast.success('Login successful');
+        localStorage.setItem('isAuthenticated', 'true'); 
+       setIsAuthenticated(true);
+
+
+
+       }, 2000);
+    }
+   
+  }
   return (
  <section className="auth">
 
@@ -16,17 +56,19 @@ function Auth() {
 
         <div className="form-fields">
 
-            <input type="text" name="username" id="username" placeholder='username' />
+            <input type="text" name="username" id="username" placeholder='username' value={username} 
+            onChange={(e)=>setUsername(e.target.value)} />
         </div>
         <div className="form-fields">
 
-            <input type="password" name="password" id="password" placeholder='password' />
+            <input type="password" name="password" id="password" placeholder='password' value={password}
+            onChange={(e)=>setPassword(e.target.value)} />
         </div>
 
 
           <div className="form-submit">
 
-            <button className="submit-form">Login</button>
+            <button className="submit-form" onClick={handleFormSubmit}>Login</button>
           </div>
 
       </form>

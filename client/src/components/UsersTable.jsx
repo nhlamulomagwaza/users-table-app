@@ -1,61 +1,87 @@
 
 import '../styles/components/userstable.scss'; 
+import { useContext } from 'react';
+import {  usersTableContext } from '../store/AppContext';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { OrbitProgress } from 'react-loading-indicators';
+import { useNavigate } from 'react-router';
 
 function UserTable() {
+    const { getUsers, setSelectedUser, deleteAUser} = useContext(usersTableContext);
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-    const users = [
-        {
-            id: 1, 
-            name: 'John Smith',
-            date_of_birth: '1999-05-18',
-            occupation: 'Software Dev',
-            gender: 'Male',
-            date_added: '2025-01-01',
-        },
-        {
-            id: 2,
-            name: 'John Smith',
-            date_of_birth: '1986-04-19',
-            occupation: 'Technician',
-            gender: 'Male',
-            date_added: '2025-04-23',
-        },
-        {
-            id: 3,
-            name: 'Jane Doe',
-            date_of_birth: '2000-10-17',
-            occupation: 'Support Engineer',
-            gender: 'Female',
-            date_added: '2025-05-11',
-        },
-        {
-            id: 4,
-            name: 'Ben Jim',
-            date_of_birth: '1981-11-24',
-            occupation: 'Technician',
-            gender: 'Male',
-            date_added: '2025-12-30',
-        },
-    ];
-
-   
-    const onEdit = (user) => {
-        console.log('Edit user:', user);
-        alert(`Attempting to edit ${user.name}`);
+     const deleteUser = async (userId) => {
       
+        if (window.confirm('Are you sure you want to delete this user?')) {
+            try {
+                        setLoading(true); 
+      
+                await deleteAUser(userId);
+                toast.success('User deleted successfully!');
+
+              
+                fetchAllUsers();
+            } catch (err) {
+                console.error( err);
+                toast.error('Error deleting user');
+            } finally {
+                setLoading(false); 
+            }
+        }
     };
 
-    const onDelete = (id) => {
-        console.log('Delete user with ID:', id);
-        alert(`Attempting to delete user ID: ${id}`);
- 
-    };
-
-    if (!users || users.length === 0) {
-        return <p className="no-records">No user records to display. Please add some users.</p>;
+    const handleEdit = (user) => {
+         setSelectedUser(user)
+        navigate('/user/edit')
     }
 
+  const fetchAllUsers = async () => {
+    setLoading(true);
+    
+        try {
+            const data = await getUsers();
+               console.log(data)
+            setUsers(data);
+         
+        } catch (err) {
+             toast.error('Error fetching users');
+             console.log(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+  
+useEffect(() => {
+    fetchAllUsers(); 
+
+    const intervalId = setInterval(() => {
+        fetchAllUsers();
+    }, 120000); 
+
+    return () => clearInterval(intervalId); 
+}, []);
+   
+   
+
+
+/* if (!users || users.length === 0) {
+    return <p className="no-records">No user records to display. Please add some users.</p>;
+}
+   */
+
     return (
+        <>
+        {loading ?
+    <div className='loading' style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '2rem'}}>
+        <OrbitProgress size='medium' color='#fff'  />
+        
+        </div>
+        : (
+
         <div className="users-table">
       {/*       <h2 className="users-table-header">Postgres Records</h2> */}
             <div className="table-container">
@@ -74,20 +100,22 @@ function UserTable() {
                         {users.map((user) => (
                             <tr key={user.id}>
                                 <td data-label="Name">{user.name}</td>
-                                <td data-label="Date of Birth">{new Date(user.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                                <td data-label="Date of Birth">{new Date(user.date_of_birth).
+                                toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
                                 <td data-label="Occupation">{user.occupation}</td>
                                 <td data-label="Gender">{user.gender}</td>
-                                <td data-label="Date Added">{new Date(user.date_added).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                                <td data-label="Date Added">{new Date(user.date_added).
+                                toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
                                 <td data-label="Actions" className="edits-column">
                                     <button
-                                        onClick={() => onEdit(user)}
+                                        onClick={() => handleEdit(user)}
                                         className="edit-button"
                                         aria-label={`Edit ${user.name}`}
                                     >
                                         Edit
                                     </button>
                                     <button
-                                        onClick={() => onDelete(user.id)}
+                                        onClick={() => deleteUser(user.id)}
                                         className="delete-button"
                                         aria-label={`Delete ${user.name}`}
                                     >
@@ -98,9 +126,12 @@ function UserTable() {
                         ))}
                     </tbody>
                 </table>
+                <button className='add-user' onClick={() => navigate('/user/add')}>Add A User</button>
             </div>
-        </div>
+        </div> )}
+         </>
     );
+   
 }
 
 export default UserTable;
