@@ -63,7 +63,7 @@ useEffect(() => {
     }, 120000); 
 
     return () => clearInterval(intervalId); 
-}, [deleteAUser,deleteUser]);
+}, []);
    
    
 
