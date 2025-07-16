@@ -43,7 +43,7 @@ const addUser= async (req, res) => {
     try {
      
         const newUser= await db.query(
-            'INSERT INTO users (name, date_of_birth, occupation, gender) VALUES ($1, $2, $3, $4) RETURNING id, date_added',
+            'INSERT INTO users (name, date_of_birth, occupation, gender) VALUES ($1, $2, $3, $4) RETURNING id, name, date_of_birth, occupation, gender, date_added',
          
             [name, date_of_birth, occupation, gender]
         );
