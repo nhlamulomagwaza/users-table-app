@@ -1,0 +1,30 @@
+
+
+
+@mixin globalPadding{
+
+    padding: 4rem 8rem;
+}
+
+
+@mixin globalTransition{
+
+    transition:  0.3s ease-in-out;
+}
+
+@mixin globalButton{
+
+    
+            padding:0.5rem 2rem;
+            border:none;
+            border-radius: 5px;
+            background-color: $accent-color;
+           color:$main-text-color;
+           cursor: pointer;
+
+           &:hover{
+
+            background-color: $accent-color2;
+            @include globalTransition;
+           }
+}

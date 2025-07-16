@@ -1,0 +1,174 @@
+@import '../fragments/colors.scss';
+.users-table {
+    margin-top: 2rem;
+    padding: 1.5rem;
+
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    .users-table-header {
+        text-align: center;
+        color: $main-text-color;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+    }
+
+    .no-records {
+        text-align: center;
+        color:  $main-text-color;
+        font-style: italic;
+        padding: 1rem;
+        border: 1px dashed  $main-text-color;
+        border-radius: 5px;
+        background-color:  $main-text-color;
+    }
+
+
+    .table-container {
+        overflow-x: auto;
+     
+    }
+
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px; 
+        thead {
+            tr {
+                background-color: $accent-color2;
+                color:  $main-text-color;
+            }
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            border: 1px solid  $main-text-color;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        tbody {
+            tr {
+                &:nth-child(even) {
+                    background-color: $main-bg-color2;
+                }
+               
+            }
+        }
+
+        .edits-column {
+            white-space: nowrap; 
+            display: flex; 
+            gap: 0.5rem; 
+            justify-content: center; 
+            align-items: center; 
+
+            button {
+                padding: 0.6rem 1rem;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                font-weight: 600;
+                transition: background-color 0.2s ease, transform 0.1s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+                &:active {
+                    transform: translateY(1px);
+                }
+            }
+
+            .edit-button {
+                background-color: $green-color; 
+                color: $main-text-color;
+                &:hover {
+                    background-color: $green-color2;
+                }
+            }
+
+            .delete-button {
+                background-color: $red-color; 
+                color: $main-text-color;
+                &:hover {
+                    background-color: $red-color2;
+                }
+            }
+        }
+    }
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    .user-table-container {
+        padding: 1rem;
+    }
+
+    .user-table {
+        border: none; 
+        min-width: auto; 
+
+        thead {
+            display: none; 
+        }
+
+        tbody {
+            display: block;
+            width: 100%;
+        }
+
+        tr {
+            display: block; 
+            margin-bottom: 1rem;
+            border: 1px solid  $main-text-color;
+            border-radius: 8px;
+            overflow: hidden; 
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+          
+        }
+
+        td {
+            display: block; 
+            text-align: right; 
+            border: none; 
+            padding-left: 50%; 
+            position: relative; 
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid $main-text-color; 
+
+            &:last-child {
+                border-bottom: none; 
+            }
+
+       
+           
+        }
+
+        .edits-column {
+            padding: 1rem;
+            display: flex; 
+            justify-content: space-around; 
+            gap: 1rem; 
+    
+            border-top: 1px solid $main-text-color; 
+
+            &::before {
+                content: none; 
+            }
+
+            button {
+                flex-grow: 1; 
+                max-width: 150px; 
+            }
+        }
+    }
+}

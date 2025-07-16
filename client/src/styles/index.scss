@@ -1,0 +1,43 @@
+//IMPORTING THE ROBOTO FONT
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+
+
+//IMPORTING SASS FRAGMENTS
+
+@import './fragments/colors.scss';
+@import './fragments/mixins.scss';
+
+/* CSS RESET */
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+html, body{
+
+    width: 100%;
+    overflow-x: hidden; 
+    font-family: 'Roboto', monospace;
+    background-color: $main-bg-color;
+    color: $main-text-color;
+}
+
+body{
+
+    @include globalPadding;
+    min-height: 100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

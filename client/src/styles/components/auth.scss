@@ -1,0 +1,71 @@
+@import '../fragments/colors.scss';
+@import '../fragments//mixins.scss';
+/* AUTH STYLES*/
+
+
+.auth{
+
+display:flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-color: $main-bg-color2;
+
+padding:3rem;
+text-align: center;
+border-radius: 10px;
+
+.auth-header{
+
+    margin-bottom: 2rem;
+
+    .auth-header-title{
+
+        font-size: 1.5rem;
+      
+        margin-bottom: 0.2rem;
+
+      
+    }
+      .auth-header-caption{
+            font-weight: 300;
+        }
+}
+
+.auth-form{
+    .form-fields{
+        input{
+
+            padding:0.5rem;
+            width: 250px;
+            margin-bottom: 1rem;
+            border:none;
+            outline:none;
+        }
+    }
+
+    .form-submit{
+
+   margin-bottom: 2rem;
+
+        button{
+            @include globalButton;
+        }
+    }
+
+    
+}
+
+.auth-footer{
+    .auth-footer-demo-credentials{
+        h1{
+            font-size: 0.8rem;
+        }
+        p{
+            font-weight: 300;
+            font-size: 0.8rem;
+        }
+    }
+}
+    
+}
